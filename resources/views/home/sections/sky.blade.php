@@ -18,7 +18,7 @@
                  </div>
                  <div class="p-4">
                      <div class="flex items-center text-[10px] text-gray-400 mb-2">
-                        <span><i class="far fa-clock mr-1"></i> {{ $gridItem->published_at->translatedFormat('d M Y') }}</span>
+                        <span><i class="far fa-clock mr-1"></i> {{ ($gridItem->published_at ?? $gridItem->created_at)->translatedFormat('d M Y') }}</span>
                      </div>
                      <h6 class="font-bold text-gray-800 hover:text-blue-600 transition leading-snug line-clamp-2 text-sm">
                          <a href="{{ route('articles.show', $gridItem->slug) }}">{{ $gridItem->title }}</a>

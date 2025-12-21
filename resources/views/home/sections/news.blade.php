@@ -19,7 +19,7 @@
                             @endif
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute bottom-0 left-0 p-3">
-                                 <div class="text-xs text-white/80 mb-1"><i class="far fa-clock"></i> {{ $trend->published_at->translatedFormat('d M Y') }}</div>
+                                 <div class="text-xs text-white/80 mb-1"><i class="far fa-clock"></i> {{ ($trend->published_at ?? $trend->created_at)->translatedFormat('d M Y') }}</div>
                                  <h6 class="font-bold text-white hover:text-red-400 transition leading-tight line-clamp-2">
                                     <a href="{{ route('articles.show', $trend->slug) }}">{{ $trend->title }}</a>
                                 </h6>
@@ -46,7 +46,7 @@
                             @endif
                          </div>
                          <div>
-                             <div class="text-[10px] text-gray-400 mb-1"><i class="far fa-clock"></i> {{ $item->published_at->translatedFormat('d M Y') }}</div>
+                             <div class="text-[10px] text-gray-400 mb-1"><i class="far fa-clock"></i> {{ ($item->published_at ?? $item->created_at)->translatedFormat('d M Y') }}</div>
                              <h6 class="text-sm font-semibold text-gray-800 hover:text-purple-600 leading-snug line-clamp-2">
                                  <a href="{{ route('articles.show', $item->slug) }}">{{ $item->title }}</a>
                              </h6>

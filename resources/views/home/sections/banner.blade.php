@@ -19,7 +19,7 @@
             <div class="flex flex-col justify-center">
                 <div class="flex items-center text-sm text-gray-400 mb-3 space-x-4">
                     <span class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded">{{ $bannerFeature->category ?? 'Tech' }}</span>
-                    <span><i class="far fa-clock mr-1"></i> {{ $bannerFeature->published_at->translatedFormat('d M Y') }}</span>
+                    <span><i class="far fa-clock mr-1"></i> {{ ($bannerFeature->published_at ?? $bannerFeature->created_at)->translatedFormat('d M Y') }}</span>
                 </div>
                 <h2 class="text-3xl lg:text-4xl font-bold leading-tight mb-4 hover:text-green-500 transition">
                     <a href="{{ route('articles.show', $bannerFeature->slug) }}">{{ $bannerFeature->title }}</a>
@@ -55,7 +55,7 @@
                         <a href="{{ route('articles.show', $sub->slug) }}">{{ $sub->title }}</a>
                     </h6>
                     <div class="text-xs text-gray-500 flex items-center mt-2">
-                        <i class="far fa-clock mr-1"></i> {{ $sub->published_at->translatedFormat('d M Y') }}
+                        <i class="far fa-clock mr-1"></i> {{ ($sub->published_at ?? $sub->created_at)->translatedFormat('d M Y') }}
                     </div>
                 </div>
             </div>
