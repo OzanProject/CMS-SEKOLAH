@@ -33,6 +33,8 @@
 
     @include('home.sections.facility')
 
+    @include('home.sections.gallery')
+
     @include('home.sections.contact')
 
 @endsection

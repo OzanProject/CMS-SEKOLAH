@@ -184,6 +184,7 @@
                     <a href="{{ url('/') }}#grid" class="px-4 py-4 hover:bg-gray-800 hover:text-green-500 transition duration-300">{{ __('Berita') }}</a>
                     <a href="{{ url('/') }}#profile" class="px-4 py-4 hover:bg-gray-800 hover:text-green-500 transition duration-300">{{ __('Profil') }}</a>
                     <a href="{{ url('/') }}#program" class="px-4 py-4 hover:bg-gray-800 hover:text-green-500 transition duration-300">{{ __('Program') }}</a>
+                    <a href="{{ route('galleries.index') }}" class="px-4 py-4 hover:bg-gray-800 hover:text-green-500 transition duration-300 {{ request()->routeIs('galleries.index') ? 'bg-gray-800 text-green-500' : '' }}">{{ __('Galeri') }}</a>
                     <a href="{{ url('/') }}#facility" class="px-4 py-4 hover:bg-gray-800 hover:text-green-500 transition duration-300">{{ __('Fasilitas') }}</a>
                     <a href="{{ url('/') }}#contact" class="px-4 py-4 hover:bg-gray-800 hover:text-green-500 transition duration-300">{{ __('Kontak') }}</a>
                 </div>
@@ -205,6 +206,7 @@
             <a href="{{ url('/') }}#latest" class="block px-4 py-3 text-sm font-semibold hover:bg-gray-800">{{ strtoupper(__('Terbaru')) }}</a>
              <a href="{{ url('/') }}#profile" class="block px-4 py-3 text-sm font-semibold hover:bg-gray-800">{{ strtoupper(__('Profil')) }}</a>
             <a href="{{ url('/') }}#program" class="block px-4 py-3 text-sm font-semibold hover:bg-gray-800">{{ strtoupper(__('Program')) }}</a>
+            <a href="{{ route('galleries.index') }}" class="block px-4 py-3 text-sm font-semibold hover:bg-gray-800 {{ request()->routeIs('galleries.index') ? 'text-green-500' : '' }}">{{ strtoupper(__('Galeri')) }}</a>
              <a href="{{ url('/') }}#contact" class="block px-4 py-3 text-sm font-semibold hover:bg-gray-800">{{ strtoupper(__('Kontak')) }}</a>
         </div>
     </nav>
@@ -301,7 +303,7 @@
                         @endif
                      </div>
                      <div>
-                         <div class="text-xs text-green-500 mb-1"><i class="far fa-clock"></i> {{ $article->published_at->translatedFormat('d M Y') }}</div>
+                         <div class="text-xs text-green-500 mb-1"><i class="far fa-clock"></i> {{ ($article->published_at ?? $article->created_at)->translatedFormat('d M Y') }}</div>
                          <h6 class="text-sm font-semibold text-white group-hover:text-green-500 leading-tight line-clamp-2">
                              <a href="{{ route('articles.show', $article->slug) }}">{{ $article->title }}</a>
                          </h6>

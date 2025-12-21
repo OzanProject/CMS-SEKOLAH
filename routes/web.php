@@ -38,6 +38,7 @@ Route::get('/facilities', [App\Http\Controllers\PublicFacilityController::class,
 Route::get('/facilities/{facility}', [App\Http\Controllers\PublicFacilityController::class, 'show'])->name('facilities.show');
 Route::get('/programs', [App\Http\Controllers\PublicProgramController::class, 'index'])->name('programs.index');
 Route::get('/programs/{program}', [App\Http\Controllers\PublicProgramController::class, 'show'])->name('programs.show');
+Route::get('/galleries', [App\Http\Controllers\PublicGalleryController::class, 'index'])->name('galleries.index');
 
 // Sitemap
 Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index']);

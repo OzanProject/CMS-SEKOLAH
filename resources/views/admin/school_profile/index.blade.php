@@ -33,22 +33,21 @@
                     <div class="form-group row">
                         <label for="school_description" class="col-sm-2 col-form-label">Deskripsi Sekolah</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="school_description" rows="4" placeholder="Jelaskan secara singkat tentang sekolah...">{{ $settings['school_description'] ?? '' }}</textarea>
+                            <textarea class="form-control" id="school_description" name="school_description" rows="4" placeholder="Jelaskan secara singkat tentang sekolah...">{{ $settings['school_description'] ?? '' }}</textarea>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="school_vision" class="col-sm-2 col-form-label">Visi</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="school_vision" rows="3" placeholder="Visi sekolah...">{{ $settings['school_vision'] ?? '' }}</textarea>
+                            <textarea class="form-control" id="school_vision" name="school_vision" rows="3" placeholder="Visi sekolah...">{{ $settings['school_vision'] ?? '' }}</textarea>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="school_mission" class="col-sm-2 col-form-label">Misi</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="school_mission" rows="6" placeholder="Misi sekolah (pisahkan dengan koma)...">{{ $settings['school_mission'] ?? '' }}</textarea>
-                            <small class="text-muted">Pisahkan setiap poin misi dengan tanda koma (,).</small>
+                            <textarea class="form-control" id="school_mission" name="school_mission" rows="6" placeholder="Misi sekolah...">{{ $settings['school_mission'] ?? '' }}</textarea>
                         </div>
                     </div>
 
@@ -61,12 +60,61 @@
     </div>
 </div>
 
+@push('css')
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+@endpush
+
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        CKEDITOR.replace('school_description');
-        CKEDITOR.replace('school_vision');
-        CKEDITOR.replace('school_mission');
+    $(document).ready(function() {
+        // Initialize Summernote
+        $('#school_description, #school_vision, #school_mission').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ],
+            callbacks: {
+                onImageUpload: function(files) {
+                    for (let i = 0; i < files.length; i++) {
+                        uploadImage(files[i], $(this));
+                    }
+                }
+            }
+        });
+
+        // Custom Upload Function
+        function uploadImage(file, editor) {
+            var data = new FormData();
+            data.append("upload", file);
+            data.append("_token", "{{ csrf_token() }}");
+
+            $.ajax({
+                url: "{{ route('admin.upload') }}",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: data,
+                type: "POST",
+                success: function(response) {
+                    if (response.uploaded) {
+                        editor.summernote('insertImage', response.url);
+                    } else {
+                        alert('Gambar gagal diupload.');
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                    alert('Gagal mengupload gambar. Simpan dulu atau cek koneksi.');
+                }
+            });
+        }
     });
 </script>
 @endpush
