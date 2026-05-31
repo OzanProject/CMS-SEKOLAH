@@ -39,11 +39,11 @@
                 @else
                     <i class="fas fa-school text-white text-8xl mb-6 opacity-90"></i>
                 @endif
-                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight drop-shadow-md">
                     {{ $school_settings['school_name'] ?? 'Selamat Datang' }}
                 </h1>
-                <div class="text-green-100 text-lg md:text-xl font-light leading-relaxed">
-                    {!! $school_settings['school_description'] ?? 'Portal integritas akademik dan manajemen sekolah masa depan.' !!}
+                <div class="text-green-50 text-base md:text-lg font-light leading-relaxed max-w-lg mx-auto line-clamp-4">
+                    {{ strip_tags($school_settings['school_description'] ?? 'Portal integritas akademik dan manajemen sekolah masa depan.') }}
                 </div>
                 
                 <!-- Optional Quote or Footer on Image Side -->

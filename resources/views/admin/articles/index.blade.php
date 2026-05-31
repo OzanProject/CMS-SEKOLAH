@@ -8,9 +8,15 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Daftar Artikel & Berita</h3>
-                <div class="card-tools d-flex">
-                    <form action="{{ route('admin.articles.index') }}" method="GET" class="mr-2">
-                        <div class="input-group input-group-sm" style="width: 250px;">
+                <div class="card-tools d-flex align-items-center">
+                    <form action="{{ route('admin.articles.index') }}" method="GET" class="mr-2 d-flex">
+                        <select name="per_page" class="form-control form-control-sm mr-2" onchange="this.form.submit()" style="width: 70px;">
+                            <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                            <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
+                            <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                            <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                        </select>
+                        <div class="input-group input-group-sm" style="width: 200px;">
                             <input type="text" name="search" class="form-control float-right" placeholder="Cari Judul..." value="{{ request('search') }}">
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-default">
@@ -115,19 +121,21 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.articles.show', $article->id) }}" class="btn btn-info btn-sm" title="Lihat">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.articles.edit', $article->id) }}" class="btn btn-warning btn-sm" title="Edit">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus artikel ini?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ route('admin.articles.show', $article->id) }}" class="btn btn-info btn-sm mr-1" title="Lihat">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('admin.articles.edit', $article->id) }}" class="btn btn-warning btn-sm mr-1" title="Edit">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST" class="m-0 p-0" onsubmit="return confirm('Yakin ingin menghapus artikel ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty

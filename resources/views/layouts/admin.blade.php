@@ -78,7 +78,7 @@
         @if(isset($school_settings['school_logo']) && $school_settings['school_logo'])
             <img src="{{ asset('storage/'.$school_settings['school_logo']) }}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         @endif
-      <span class="brand-text font-weight-light pl-2">{{ $school_settings['school_name'] ?? 'MyPortal Sekolah' }}</span>
+      <span class="brand-text font-weight-light pl-2" style="white-space: normal; font-size: 0.9rem; line-height: 1.2; display: inline-block; vertical-align: middle; max-width: 170px;">{{ $school_settings['school_name'] ?? 'MyPortal Sekolah' }}</span>
     </a>
 
     <!-- Sidebar -->

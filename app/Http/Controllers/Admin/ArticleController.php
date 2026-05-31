@@ -21,7 +21,8 @@ class ArticleController extends Controller
             });
         }
 
-        $articles = $query->orderBy('created_at', 'desc')->orderBy('id', 'desc')->paginate(10);
+        $perPage = $request->input('per_page', 10);
+        $articles = $query->orderBy('created_at', 'desc')->orderBy('id', 'desc')->paginate($perPage)->withQueryString();
 
         return view('admin.articles.index', compact('articles'));
     }
