@@ -11,8 +11,6 @@ class SetLocale
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -20,15 +18,15 @@ class SetLocale
         // Get preferred language from browser (id or en)
         // If 'id' is present in Accept-Language, prioritize it.
         // Otherwise default to 'en' (or whatever logic user wants for "luar indonesia")
-        
+
         $preferred = $request->getPreferredLanguage(['id', 'en']);
-        
+
         // If detection fails or returns something we support, set it.
         if ($preferred) {
-             App::setLocale($preferred);
+            App::setLocale($preferred);
         } else {
-             // Default fallback if header is missing
-             App::setLocale('en'); 
+            // Default fallback if header is missing
+            App::setLocale('en');
         }
 
         return $next($request);

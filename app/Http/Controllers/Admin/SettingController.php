@@ -12,6 +12,7 @@ class SettingController extends Controller
     public function index()
     {
         $settings = Setting::all()->pluck('value', 'key');
+
         return view('admin.settings.index', compact('settings'));
     }
 
@@ -35,7 +36,7 @@ class SettingController extends Controller
         if ($request->hasFile('school_logo')) {
             $file = $request->file('school_logo');
             $path = $file->store('settings', 'public');
-            
+
             // Delete old logo if exists
             $oldLogo = Setting::getValue('school_logo');
             if ($oldLogo && Storage::disk('public')->exists($oldLogo)) {

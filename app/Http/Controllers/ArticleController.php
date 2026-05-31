@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -13,22 +14,24 @@ class ArticleController extends Controller
 
         // Search Filter
         if ($request->has('search') && $request->search != '') {
-            $query->where('title', 'like', '%' . $request->search . '%')
-                  ->orWhere('content', 'like', '%' . $request->search . '%');
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%'.$request->search.'%')
+                    ->orWhere('content', 'like', '%'.$request->search.'%');
+            });
         }
 
         // Category Filter
         if ($request->has('category') && $request->category != '') {
-            $category = \App\Models\Category::where('slug', $request->category)->first();
+            $category = Category::where('slug', $request->category)->first();
             if ($category) {
                 $query->where('category_id', $category->id);
             }
         }
 
         $articles = $query->orderBy('created_at', 'desc')->orderBy('id', 'desc')->paginate(9)->withQueryString();
-        
+
         // Sidebar Data
-        $categories = \App\Models\Category::withCount('articles')->get();
+        $categories = Category::withCount('articles')->get();
         $recentArticles = Article::where('status', 'published')->orderBy('created_at', 'desc')->orderBy('id', 'desc')->take(5)->get();
 
         return view('articles.index', compact('articles', 'categories', 'recentArticles'));
@@ -44,7 +47,7 @@ class ArticleController extends Controller
         $article->increment('views');
 
         // Related Articles (Same Category, exclude current)
-        $relatedArticles = Article::where('category', $article->category)
+        $relatedArticles = Article::where('category_id', $article->category_id)
             ->where('id', '!=', $article->id)
             ->where('status', 'published')
             ->latest()
@@ -57,7 +60,7 @@ class ArticleController extends Controller
             ->latest()
             ->take(5)
             ->get();
-        
+
         return view('articles.show', compact('article', 'relatedArticles', 'recentArticles'));
     }
 }

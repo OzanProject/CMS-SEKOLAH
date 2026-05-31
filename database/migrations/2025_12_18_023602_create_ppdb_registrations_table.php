@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('asal_sekolah');
-            
+
             // Data Orang Tua
             $table->string('nama_ayah');
             $table->string('nama_ibu');
@@ -36,7 +36,7 @@ return new class extends Migration
 
             // Status
             $table->enum('status', ['menunggu', 'diterima', 'ditolak'])->default('menunggu');
-            
+
             $table->timestamps();
         });
     }

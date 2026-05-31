@@ -13,6 +13,7 @@ class ProgramController extends Controller
     public function index()
     {
         $programs = Program::latest()->get();
+
         return view('admin.programs.index', compact('programs'));
     }
 

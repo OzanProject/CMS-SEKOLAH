@@ -12,6 +12,7 @@ class GalleryController extends Controller
     public function index()
     {
         $galleries = Gallery::latest()->get();
+
         return view('admin.galleries.index', compact('galleries'));
     }
 
@@ -73,6 +74,7 @@ class GalleryController extends Controller
             Storage::disk('public')->delete($gallery->image);
         }
         $gallery->delete();
+
         return redirect()->route('admin.galleries.index')->with('success', 'Foto kegiatan berhasil dihapus');
     }
 }

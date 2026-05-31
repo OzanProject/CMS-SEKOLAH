@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class PageController extends Controller
 {
     public function about()
@@ -24,6 +22,6 @@ class PageController extends Controller
     public function contact()
     {
         // If we want a dedicated contact page separate from home
-        return view('pages.contact'); 
+        return view('pages.contact');
     }
 }

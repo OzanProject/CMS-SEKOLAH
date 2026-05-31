@@ -15,7 +15,7 @@ return new class extends Migration
             // Data Pribadi Siswa
             $table->string('nik', 16)->after('nama_lengkap')->nullable();
             $table->string('agama')->after('jenis_kelamin')->nullable();
-            
+
             // Detail Alamat
             $table->string('rt', 5)->after('alamat')->nullable();
             $table->string('rw', 5)->after('rt')->nullable();
@@ -50,11 +50,11 @@ return new class extends Migration
     {
         Schema::table('ppdb_registrations', function (Blueprint $table) {
             $table->dropColumn([
-                'nik', 'agama', 
+                'nik', 'agama',
                 'rt', 'rw', 'desa', 'kecamatan', 'kabupaten', 'kode_pos',
                 'nik_ayah', 'tahun_lahir_ayah', 'pendidikan_ayah', 'penghasilan_ayah',
                 'nik_ibu', 'tahun_lahir_ibu', 'pendidikan_ibu', 'penghasilan_ibu',
-                'nama_wali', 'nik_wali', 'no_hp_wali'
+                'nama_wali', 'nik_wali', 'no_hp_wali',
             ]);
         });
     }

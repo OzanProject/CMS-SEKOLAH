@@ -33,9 +33,16 @@
                         <b>Selesai</b> <span class="float-right">{{ $event->end_date->format('d M Y H:i') }}</span>
                     </li>
                 </ul>
-                <a href="{{ route('admin.voting.show', $event->id) }}" class="btn btn-block {{ $event->is_active ? 'btn-success' : 'btn-secondary' }}">
+                <a href="{{ route('admin.voting.show', $event->id) }}" class="btn btn-block {{ $event->is_active ? 'btn-success' : 'btn-secondary' }} mb-2">
                     <i class="fas fa-cog"></i> Kelola (Kandidat & Token)
                 </a>
+                <form action="{{ route('admin.voting.destroy', $event->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus event ini? Semua data kandidat, token, dan suara akan hilang permanen.');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-block btn-danger btn-sm">
+                        <i class="fas fa-trash"></i> Hapus Event
+                    </button>
+                </form>
             </div>
         </div>
     </div>

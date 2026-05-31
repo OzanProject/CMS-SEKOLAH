@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Voting;
 use App\Http\Controllers\Controller;
 use App\Models\VotingEvent;
 use App\Models\VotingToken;
-use App\Models\VotingCandidate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -24,14 +23,14 @@ class VoteController extends Controller
             ->where('is_used', false)
             ->first();
 
-        if (!$token) {
+        if (! $token) {
             return back()->with('error', 'Token tidak valid atau sudah digunakan.');
         }
-        
+
         // Cek event aktif
         $event = $token->event;
-        if (!$event->is_active) { // Simplifikasi, harusnya cek date juga
-             return back()->with('error', 'Event voting belum dimulai atau sudah selesai.');
+        if (! $event->is_active) { // Simplifikasi, harusnya cek date juga
+            return back()->with('error', 'Event voting belum dimulai atau sudah selesai.');
         }
 
         // Store to session
@@ -43,7 +42,7 @@ class VoteController extends Controller
 
     public function ballot()
     {
-        if (!Session::has('voting_token_id')) {
+        if (! Session::has('voting_token_id')) {
             return redirect()->route('voting.login');
         }
 
@@ -59,14 +58,14 @@ class VoteController extends Controller
             'candidate_id' => 'required|exists:voting_candidates,id',
         ]);
 
-        if (!Session::has('voting_token_id')) {
+        if (! Session::has('voting_token_id')) {
             return redirect()->route('voting.login')->with('error', 'Sesi habis, silakan login ulang.');
         }
 
         $tokenId = Session::get('voting_token_id');
         $token = VotingToken::find($tokenId);
 
-        if (!$token || $token->is_used) {
+        if (! $token || $token->is_used) {
             return redirect()->route('voting.login')->with('error', 'Token tidak valid atau sudah digunakan.');
         }
 

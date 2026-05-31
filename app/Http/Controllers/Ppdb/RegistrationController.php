@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Ppdb;
 use App\Http\Controllers\Controller;
 use App\Models\PpdbRegistration;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class RegistrationController extends Controller
 {
@@ -30,7 +29,7 @@ class RegistrationController extends Controller
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:L,P',
             'agama' => 'required|string',
-            
+
             // Alamat
             'alamat' => 'required|string',
             'rt' => 'required|numeric',
@@ -56,9 +55,9 @@ class RegistrationController extends Controller
             'pendidikan_ibu' => 'required|string',
             'pekerjaan_ibu' => 'required|string',
             'penghasilan_ibu' => 'required|string',
-            
+
             'no_hp' => 'required|numeric',
-            
+
             // Wali (Nullable)
             'nama_wali' => 'nullable|string',
             'nik_wali' => 'nullable|numeric|digits:16',
@@ -69,8 +68,8 @@ class RegistrationController extends Controller
         ]);
 
         $data = $request->all();
-        $data['nomor_pendaftaran'] = 'PPDB-' . date('Y') . '-' . rand(1000, 9999);
-        
+        $data['nomor_pendaftaran'] = 'PPDB-'.date('Y').'-'.rand(1000, 9999);
+
         if ($request->hasFile('file_kk')) {
             $data['file_kk'] = $request->file('file_kk')->store('ppdb/kk', 'public');
         }
@@ -99,14 +98,14 @@ class RegistrationController extends Controller
     public function searchStatus(Request $request)
     {
         $request->validate([
-            'keyword' => 'required|string|min:4'
+            'keyword' => 'required|string|min:4',
         ]);
 
         $registration = PpdbRegistration::where('nomor_pendaftaran', $request->keyword)
             ->orWhere('nisn', $request->keyword)
             ->first();
 
-        if (!$registration) {
+        if (! $registration) {
             return back()->with('error', 'Data pendaftaran tidak ditemukan. Mohon cek kembali Nomor Pendaftaran atau NISN anda.');
         }
 

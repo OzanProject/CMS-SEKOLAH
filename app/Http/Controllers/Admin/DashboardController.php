@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Classroom;
+use App\Models\Committee;
 use App\Models\PpdbRegistration;
-use App\Models\VotingEvent;
 use App\Models\Student;
 use App\Models\Teacher;
-use App\Models\Committee;
-use App\Models\Classroom;
-use Illuminate\Http\Request;
+use App\Models\VotingEvent;
 
 class DashboardController extends Controller
 {

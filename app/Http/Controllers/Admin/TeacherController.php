@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Teacher;
-use App\Imports\TeacherImport;
 use App\Exports\TeacherTemplateExport;
+use App\Http\Controllers\Controller;
+use App\Imports\TeacherImport;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -16,8 +16,8 @@ class TeacherController extends Controller
         $query = Teacher::query();
 
         if ($request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('nip', 'like', '%' . $request->search . '%');
+            $query->where('name', 'like', '%'.$request->search.'%')
+                ->orWhere('nip', 'like', '%'.$request->search.'%');
         }
 
         $teachers = $query->paginate(10);
@@ -43,7 +43,7 @@ class TeacherController extends Controller
         $request->validate([
             'name' => 'required',
             'gender' => 'required|in:L,P',
-            'nip' => 'nullable|unique:teachers,nip,' . $teacher->id,
+            'nip' => 'nullable|unique:teachers,nip,'.$teacher->id,
         ]);
 
         $teacher->update($request->all());
@@ -54,17 +54,18 @@ class TeacherController extends Controller
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();
+
         return back()->with('success', 'Data guru berhasil dihapus.');
     }
 
-    public function import(Request $request) 
+    public function import(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls'
+            'file' => 'required|mimes:xlsx,xls',
         ]);
 
         Excel::import(new TeacherImport, $request->file('file'));
-        
+
         return back()->with('success', 'Data guru berhasil diimport.');
     }
 

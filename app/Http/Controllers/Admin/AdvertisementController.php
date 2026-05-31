@@ -12,6 +12,7 @@ class AdvertisementController extends Controller
     public function index()
     {
         $advertisements = Advertisement::latest()->paginate(10);
+
         return view('admin.advertisements.index', compact('advertisements'));
     }
 
@@ -73,7 +74,7 @@ class AdvertisementController extends Controller
                 $data['value'] = $advertisement->value; // Keep old image
             }
         } else {
-             $data['value'] = $request->value_script;
+            $data['value'] = $request->value_script;
         }
 
         $data['is_active'] = $request->has('is_active');
@@ -89,6 +90,7 @@ class AdvertisementController extends Controller
             Storage::disk('public')->delete($advertisement->value);
         }
         $advertisement->delete();
+
         return redirect()->route('admin.advertisements.index')->with('success', 'Iklan berhasil dihapus.');
     }
 }

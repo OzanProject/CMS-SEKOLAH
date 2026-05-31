@@ -16,22 +16,20 @@ class StudentImport implements ToModel, WithHeadingRow
     }
 
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         // Skip if name is empty
-        if (!isset($row['nama_lengkap']) && !isset($row['nama'])) {
+        if (! isset($row['nama_lengkap']) && ! isset($row['nama'])) {
             return null;
         }
 
         return new Student([
             'classroom_id' => $this->classroom_id,
-            'nisn'     => $row['nisn'] ?? null,
-            'name'     => $row['nama_lengkap'] ?? $row['nama'],
-            'gender'   => $row['lp'] ?? $row['jenis_kelamin'] ?? 'L',
+            'nisn' => $row['nisn'] ?? null,
+            'name' => $row['nama_lengkap'] ?? $row['nama'],
+            'gender' => $row['lp'] ?? $row['jenis_kelamin'] ?? 'L',
         ]);
     }
 }

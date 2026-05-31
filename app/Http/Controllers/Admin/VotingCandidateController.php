@@ -41,6 +41,7 @@ class VotingCandidateController extends Controller
     public function show(VotingCandidate $candidate)
     {
         $event = $candidate->votingEvent;
+
         return view('admin.voting.candidates.show', compact('candidate', 'event'));
     }
 
@@ -50,6 +51,7 @@ class VotingCandidateController extends Controller
     public function edit(VotingCandidate $candidate)
     {
         $event = $candidate->votingEvent;
+
         return view('admin.voting.candidates.edit', compact('candidate', 'event'));
     }
 
@@ -87,11 +89,11 @@ class VotingCandidateController extends Controller
     public function destroy(VotingCandidate $candidate)
     {
         $eventId = $candidate->voting_event_id;
-        
+
         if ($candidate->photo) {
             Storage::disk('public')->delete($candidate->photo);
         }
-        
+
         $candidate->delete();
 
         return redirect()->route('admin.voting.show', $eventId)->with('success', 'Kandidat dihapus.');

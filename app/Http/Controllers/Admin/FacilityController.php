@@ -13,6 +13,7 @@ class FacilityController extends Controller
     public function index()
     {
         $facilities = Facility::latest()->get();
+
         return view('admin.facilities.index', compact('facilities'));
     }
 

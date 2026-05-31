@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PpdbRegistration;
-use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class PpdbController extends Controller
 {
     public function index()
     {
         $registrants = PpdbRegistration::latest()->paginate(20);
+
         return view('admin.ppdb.index', compact('registrants'));
     }
 
@@ -29,19 +30,19 @@ class PpdbController extends Controller
 
         $registration->update([
             'status' => $request->status,
-            'catatan' => $request->catatan
+            'catatan' => $request->catatan,
         ]);
 
         return redirect()->back()->with('success', 'Status pendaftaran berhasil diperbarui.');
     }
 
-
     public function destroy(PpdbRegistration $registration)
     {
         // Delete files if exists
         // ... implementation needed for file cleanup
-        
+
         $registration->delete();
+
         return redirect()->route('admin.ppdb.index')->with('success', 'Data pendaftar berhasil dihapus.');
     }
 
@@ -53,6 +54,6 @@ class PpdbController extends Controller
         $pdf = Pdf::loadView('admin.ppdb.pdf', compact('registrants', 'school_settings'));
         $pdf->setPaper('a4', 'landscape');
 
-        return $pdf->stream('Laporan-PPDB-' . date('Y-m-d') . '.pdf');
+        return $pdf->stream('Laporan-PPDB-'.date('Y-m-d').'.pdf');
     }
 }

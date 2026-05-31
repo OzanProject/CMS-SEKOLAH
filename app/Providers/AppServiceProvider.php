@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,10 +31,10 @@ class AppServiceProvider extends ServiceProvider
             }
 
             if (\Illuminate\Support\Facades\Schema::hasTable('links')) {
-                 $links = \App\Models\Link::all();
-                 \Illuminate\Support\Facades\View::share('footer_links', $links);
+                $links = \App\Models\Link::all();
+                \Illuminate\Support\Facades\View::share('footer_links', $links);
             } else {
-                 \Illuminate\Support\Facades\View::share('footer_links', []);
+                \Illuminate\Support\Facades\View::share('footer_links', []);
             }
 
             if (\Illuminate\Support\Facades\Schema::hasTable('articles')) {

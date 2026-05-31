@@ -1,7 +1,15 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicFacilityController;
+use App\Http\Controllers\PublicGalleryController;
+use App\Http\Controllers\PublicProfileController;
+use App\Http\Controllers\PublicProgramController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -26,34 +34,30 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Contact Message
-Route::post('/messages', [App\Http\Controllers\MessageController::class, 'store'])->name('messages.store');
+Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 
 // Articles (Public)
-Route::get('/articles', [App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
-Route::get('/articles/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('articles.show');
+Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('articles.show');
 
 // Public Profile & Facilities
-Route::get('/school-profile', [App\Http\Controllers\PublicProfileController::class, 'index'])->name('public_profile.index'); // Renamed to avoid clone with auth profile
-Route::get('/facilities', [App\Http\Controllers\PublicFacilityController::class, 'index'])->name('facilities.index');
-Route::get('/facilities/{facility}', [App\Http\Controllers\PublicFacilityController::class, 'show'])->name('facilities.show');
-Route::get('/programs', [App\Http\Controllers\PublicProgramController::class, 'index'])->name('programs.index');
-Route::get('/programs/{program}', [App\Http\Controllers\PublicProgramController::class, 'show'])->name('programs.show');
-Route::get('/galleries', [App\Http\Controllers\PublicGalleryController::class, 'index'])->name('galleries.index');
+Route::get('/school-profile', [PublicProfileController::class, 'index'])->name('public_profile.index'); // Renamed to avoid clone with auth profile
+Route::get('/facilities', [PublicFacilityController::class, 'index'])->name('facilities.index');
+Route::get('/facilities/{facility}', [PublicFacilityController::class, 'show'])->name('facilities.show');
+Route::get('/programs', [PublicProgramController::class, 'index'])->name('programs.index');
+Route::get('/programs/{program}', [PublicProgramController::class, 'show'])->name('programs.show');
+Route::get('/galleries', [PublicGalleryController::class, 'index'])->name('galleries.index');
 
 // Sitemap
-Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index']);
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
 // Static Pages (AdSense Compliance)
-Route::get('/about', [App\Http\Controllers\PageController::class, 'about'])->name('pages.about');
-Route::get('/privacy', [App\Http\Controllers\PageController::class, 'privacy'])->name('pages.privacy');
-Route::get('/disclaimer', [App\Http\Controllers\PageController::class, 'disclaimer'])->name('pages.disclaimer');
-
-
+Route::get('/about', [PageController::class, 'about'])->name('pages.about');
+Route::get('/privacy', [PageController::class, 'privacy'])->name('pages.privacy');
+Route::get('/disclaimer', [PageController::class, 'disclaimer'])->name('pages.disclaimer');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-require __DIR__.'/auth.php';

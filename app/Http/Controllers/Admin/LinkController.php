@@ -11,6 +11,7 @@ class LinkController extends Controller
     public function index()
     {
         $links = Link::latest()->get();
+
         return view('admin.links.index', compact('links'));
     }
 
@@ -61,6 +62,7 @@ class LinkController extends Controller
     public function destroy(Link $link)
     {
         $link->delete();
+
         return redirect()->route('admin.links.index')->with('success', 'Link berhasil dihapus');
     }
 }

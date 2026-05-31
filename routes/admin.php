@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PpdbController as AdminPpdbController;
 use App\Http\Controllers\Admin\VotingController as AdminVotingController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -24,19 +24,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('ppdb/{registration}', [AdminPpdbController::class, 'show'])->name('ppdb.show');
     Route::put('ppdb/{registration}/status', [AdminPpdbController::class, 'updateStatus'])->name('ppdb.updateStatus');
     Route::delete('ppdb/{registration}', [AdminPpdbController::class, 'destroy'])->name('ppdb.destroy');
-    
+
     // Voting Admin
     Route::resource('voting', AdminVotingController::class);
     // Route::post('voting/{event}/candidates', [AdminVotingController::class, 'storeCandidate'])->name('voting.candidates.store'); // Moved to candidate controller
     Route::post('voting/{event}/candidates', [App\Http\Controllers\Admin\VotingCandidateController::class, 'store'])->name('voting.candidates.store');
-    
+
     // Candidate Resource (Nested somewhat via ID but direct resource)
     Route::resource('candidates', App\Http\Controllers\Admin\VotingCandidateController::class)->except(['index', 'create', 'store']);
 
     Route::post('voting/{event}/tokens', [AdminVotingController::class, 'generateTokens'])->name('voting.tokens.generate');
     Route::get('voting/{event}/tokens/export', [AdminVotingController::class, 'exportTokensPdf'])->name('voting.tokens.export');
     Route::delete('voting/{event}/tokens', [AdminVotingController::class, 'resetTokens'])->name('voting.tokens.reset');
-    
+
     // Homepage Content
     Route::resource('programs', App\Http\Controllers\Admin\ProgramController::class);
     Route::resource('facilities', App\Http\Controllers\Admin\FacilityController::class);
@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route::resource('sliders', App\Http\Controllers\Admin\SliderController::class); // Removed by User Request
     Route::resource('advertisements', App\Http\Controllers\Admin\AdvertisementController::class);
     Route::resource('advertisements', App\Http\Controllers\Admin\AdvertisementController::class);
-    
+
     // Messages
     Route::resource('messages', App\Http\Controllers\Admin\MessageController::class)->only(['index', 'show', 'destroy']);
 

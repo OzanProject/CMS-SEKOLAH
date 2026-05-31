@@ -38,7 +38,7 @@ class ProfileController extends Controller
             if ($request->user()->photo && \Illuminate\Support\Facades\Storage::disk('public')->exists($request->user()->photo)) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($request->user()->photo);
             }
-            
+
             $file = $request->file('photo');
             $path = $file->store('profiles', 'public');
             $request->user()->photo = $path;

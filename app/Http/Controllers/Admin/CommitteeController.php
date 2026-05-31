@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Committee;
-use App\Imports\CommitteeImport;
 use App\Exports\CommitteeTemplateExport;
+use App\Http\Controllers\Controller;
+use App\Imports\CommitteeImport;
+use App\Models\Committee;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -16,8 +16,8 @@ class CommitteeController extends Controller
         $query = Committee::query();
 
         if ($request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('position', 'like', '%' . $request->search . '%');
+            $query->where('name', 'like', '%'.$request->search.'%')
+                ->orWhere('position', 'like', '%'.$request->search.'%');
         }
 
         $committees = $query->paginate(10);
@@ -54,17 +54,18 @@ class CommitteeController extends Controller
     public function destroy(Committee $committee)
     {
         $committee->delete();
+
         return back()->with('success', 'Data panitia berhasil dihapus.');
     }
 
-    public function import(Request $request) 
+    public function import(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls'
+            'file' => 'required|mimes:xlsx,xls',
         ]);
 
         Excel::import(new CommitteeImport, $request->file('file'));
-        
+
         return back()->with('success', 'Data panitia berhasil diimport.');
     }
 

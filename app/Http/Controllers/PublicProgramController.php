@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Program;
-use Illuminate\Http\Request;
 
 class PublicProgramController extends Controller
 {
     public function index()
     {
         $programs = Program::latest()->get();
+
         return view('programs.index', compact('programs'));
     }
 

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -15,19 +15,21 @@ class ArticleController extends Controller
         $query = Article::query();
 
         if ($request->has('search') && $request->search != '') {
-            $query->where(function($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->search . '%')
-                  ->orWhere('content', 'like', '%' . $request->search . '%');
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%'.$request->search.'%')
+                    ->orWhere('content', 'like', '%'.$request->search.'%');
             });
         }
 
         $articles = $query->orderBy('created_at', 'desc')->orderBy('id', 'desc')->paginate(10);
+
         return view('admin.articles.index', compact('articles'));
     }
 
     public function create()
     {
         $categories = \App\Models\Category::all();
+
         return view('admin.articles.create', compact('categories'));
     }
 
@@ -41,9 +43,13 @@ class ArticleController extends Controller
         ]);
 
         $data = $request->all();
-        $data['slug'] = Str::slug($request->title) . '-' . uniqid();
+        $slug = Str::slug($request->title);
+        if (Article::where('slug', $slug)->exists()) {
+            $slug .= '-'.uniqid();
+        }
+        $data['slug'] = $slug;
         $data['author_id'] = auth()->id();
-        
+
         // Sync string category for backward compatibility
         $category = \App\Models\Category::find($request->category_id);
         $data['category'] = $category->name;
@@ -67,6 +73,7 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         $categories = \App\Models\Category::all();
+
         return view('admin.articles.edit', compact('article', 'categories'));
     }
 
@@ -80,8 +87,16 @@ class ArticleController extends Controller
         ]);
 
         $data = $request->all();
-        $data['slug'] = Str::slug($request->title);
-        
+        if ($request->title != $article->title) {
+            $slug = Str::slug($request->title);
+            if (Article::where('slug', $slug)->where('id', '!=', $article->id)->exists()) {
+                $slug .= '-'.uniqid();
+            }
+            $data['slug'] = $slug;
+        } else {
+            unset($data['slug']);
+        }
+
         // Sync string category
         $category = \App\Models\Category::find($request->category_id);
         $data['category'] = $category->name;
@@ -106,6 +121,7 @@ class ArticleController extends Controller
             Storage::disk('public')->delete($article->image);
         }
         $article->delete();
+
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil dihapus.');
     }
 
@@ -125,6 +141,6 @@ class ArticleController extends Controller
             $article->delete();
         }
 
-        return redirect()->route('admin.articles.index')->with('success', count($articles) . ' Artikel berhasil dihapus.');
+        return redirect()->route('admin.articles.index')->with('success', count($articles).' Artikel berhasil dihapus.');
     }
 }

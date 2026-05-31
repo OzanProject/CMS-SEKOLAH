@@ -13,10 +13,10 @@ class SchoolProfileController extends Controller
     {
         // Only fetch profile-related settings
         $settings = Setting::whereIn('key', [
-            'school_description', 
-            'school_vision', 
-            'school_mission', 
-            'school_profile_image'
+            'school_description',
+            'school_vision',
+            'school_mission',
+            'school_profile_image',
         ])->pluck('value', 'key');
 
         return view('admin.school_profile.index', compact('settings'));
@@ -38,7 +38,7 @@ class SchoolProfileController extends Controller
         if ($request->hasFile('school_profile_image')) {
             $file = $request->file('school_profile_image');
             $path = $file->store('settings', 'public');
-            
+
             // Delete old image if exists
             $oldImage = Setting::getValue('school_profile_image');
             if ($oldImage && Storage::disk('public')->exists($oldImage)) {
