@@ -15,6 +15,14 @@
     <div class="card-body">
         <form method="GET" class="mb-3">
             <div class="row">
+                <div class="col-md-2">
+                    <select name="per_page" class="form-control" onchange="this.form.submit()">
+                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10 Tampil</option>
+                        <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20 Tampil</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50 Tampil</option>
+                        <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100 Tampil</option>
+                    </select>
+                </div>
                 <div class="col-md-3">
                     <select name="classroom_id" class="form-control" onchange="this.form.submit()">
                         <option value="">-- Semua Kelas --</option>

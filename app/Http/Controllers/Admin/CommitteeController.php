@@ -20,7 +20,8 @@ class CommitteeController extends Controller
                 ->orWhere('position', 'like', '%'.$request->search.'%');
         }
 
-        $committees = $query->paginate(10);
+        $perPage = $request->input('per_page', 10);
+        $committees = $query->paginate($perPage)->withQueryString();
 
         return view('admin.committees.index', compact('committees'));
     }
@@ -56,6 +57,18 @@ class CommitteeController extends Controller
         $committee->delete();
 
         return back()->with('success', 'Data panitia berhasil dihapus.');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:committees,id',
+        ]);
+
+        Committee::whereIn('id', $request->ids)->delete();
+
+        return back()->with('success', count($request->ids) . ' Data panitia berhasil dihapus.');
     }
 
     public function import(Request $request)

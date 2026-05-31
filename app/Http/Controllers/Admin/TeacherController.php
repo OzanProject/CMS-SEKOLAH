@@ -20,7 +20,8 @@ class TeacherController extends Controller
                 ->orWhere('nip', 'like', '%'.$request->search.'%');
         }
 
-        $teachers = $query->paginate(10);
+        $perPage = $request->input('per_page', 10);
+        $teachers = $query->paginate($perPage)->withQueryString();
 
         return view('admin.teachers.index', compact('teachers'));
     }
@@ -56,6 +57,18 @@ class TeacherController extends Controller
         $teacher->delete();
 
         return back()->with('success', 'Data guru berhasil dihapus.');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:teachers,id',
+        ]);
+
+        Teacher::whereIn('id', $request->ids)->delete();
+
+        return back()->with('success', count($request->ids) . ' Data guru berhasil dihapus.');
     }
 
     public function import(Request $request)

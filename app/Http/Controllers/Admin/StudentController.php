@@ -24,7 +24,8 @@ class StudentController extends Controller
                 ->orWhere('nisn', 'like', '%'.$request->search.'%');
         }
 
-        $students = $query->paginate(10);
+        $perPage = $request->input('per_page', 10);
+        $students = $query->paginate($perPage)->withQueryString();
         $classrooms = Classroom::all();
 
         return view('admin.students.index', compact('students', 'classrooms'));

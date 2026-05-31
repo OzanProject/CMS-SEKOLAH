@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $classrooms = Classroom::withCount('students')->latest()->get();
+        $query = Classroom::withCount('students');
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%'.$request->search.'%');
+        }
+
+        $perPage = $request->input('per_page', 10);
+        $classrooms = $query->latest()->paginate($perPage)->withQueryString();
 
         return view('admin.classrooms.index', compact('classrooms'));
     }
@@ -36,5 +43,17 @@ class ClassroomController extends Controller
         $classroom->delete();
 
         return back()->with('success', 'Kelas berhasil dihapus.');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:classrooms,id',
+        ]);
+
+        Classroom::whereIn('id', $request->ids)->delete();
+
+        return back()->with('success', count($request->ids) . ' Kelas berhasil dihapus.');
     }
 }

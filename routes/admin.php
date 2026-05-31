@@ -59,17 +59,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('galleries', App\Http\Controllers\Admin\GalleryController::class);
 
     // Master Data
+    // Master Data
+    Route::delete('classrooms/bulk-destroy', [App\Http\Controllers\Admin\ClassroomController::class, 'bulkDestroy'])->name('classrooms.bulk_destroy');
     Route::resource('classrooms', App\Http\Controllers\Admin\ClassroomController::class)->except(['create', 'show', 'edit']);
+    
     Route::get('students/template', [App\Http\Controllers\Admin\StudentController::class, 'downloadTemplate'])->name('students.template');
     Route::get('students', [App\Http\Controllers\Admin\StudentController::class, 'index'])->name('students.index');
     Route::post('students/import', [App\Http\Controllers\Admin\StudentController::class, 'import'])->name('students.import');
     Route::delete('students/bulk-destroy', [App\Http\Controllers\Admin\StudentController::class, 'bulkDestroy'])->name('students.bulk_destroy');
     Route::delete('students/{student}', [App\Http\Controllers\Admin\StudentController::class, 'destroy'])->name('students.destroy');
 
+    Route::delete('teachers/bulk-destroy', [App\Http\Controllers\Admin\TeacherController::class, 'bulkDestroy'])->name('teachers.bulk_destroy');
     Route::resource('teachers', App\Http\Controllers\Admin\TeacherController::class)->except(['create', 'show', 'edit']);
     Route::get('teachers/template', [App\Http\Controllers\Admin\TeacherController::class, 'downloadTemplate'])->name('teachers.template');
     Route::post('teachers/import', [App\Http\Controllers\Admin\TeacherController::class, 'import'])->name('teachers.import');
 
+    Route::delete('committees/bulk-destroy', [App\Http\Controllers\Admin\CommitteeController::class, 'bulkDestroy'])->name('committees.bulk_destroy');
     Route::resource('committees', App\Http\Controllers\Admin\CommitteeController::class)->except(['create', 'show', 'edit']);
     Route::get('committees/template', [App\Http\Controllers\Admin\CommitteeController::class, 'downloadTemplate'])->name('committees.template');
     Route::post('committees/import', [App\Http\Controllers\Admin\CommitteeController::class, 'import'])->name('committees.import');

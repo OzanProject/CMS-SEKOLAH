@@ -6,10 +6,10 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Daftar Artikel & Berita</h3>
-                <div class="card-tools d-flex align-items-center">
-                    <form action="{{ route('admin.articles.index') }}" method="GET" class="mr-2 d-flex">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title mb-0">Daftar Artikel & Berita</h3>
+                <div class="d-flex align-items-center">
+                    <form action="{{ route('admin.articles.index') }}" method="GET" class="mr-2 mb-0 d-flex align-items-center">
                         <select name="per_page" class="form-control form-control-sm mr-2" onchange="this.form.submit()" style="width: 70px;">
                             <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
                             <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
