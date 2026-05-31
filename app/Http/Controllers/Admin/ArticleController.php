@@ -60,6 +60,10 @@ class ArticleController extends Controller
 
         $data['is_featured'] = $request->has('is_featured');
 
+        if (empty($data['published_at']) && ($data['status'] ?? 'published') === 'published') {
+            $data['published_at'] = now();
+        }
+
         Article::create($data);
 
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil dibuat.');
@@ -109,6 +113,10 @@ class ArticleController extends Controller
         }
 
         $data['is_featured'] = $request->has('is_featured');
+
+        if (empty($data['published_at']) && ($data['status'] ?? $article->status) === 'published') {
+            $data['published_at'] = now();
+        }
 
         $article->update($data);
 

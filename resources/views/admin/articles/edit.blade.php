@@ -52,6 +52,12 @@
                             </div>
 
                             <div class="form-group">
+                                <label>Tanggal Rilis (Opsional)</label>
+                                <input type="datetime-local" name="published_at" class="form-control" value="{{ old('published_at', $article->published_at ? $article->published_at->format('Y-m-d\TH:i') : '') }}">
+                                <small class="text-muted">Kosongkan jika ingin diterbitkan sekarang.</small>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured', $article->is_featured) ? 'checked' : '' }}>
                                     <label for="is_featured" class="custom-control-label">Jadikan Headline / Featured</label>

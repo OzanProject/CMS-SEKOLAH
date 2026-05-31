@@ -204,7 +204,7 @@
                             @endif
                         </div>
                         <div>
-                            <div class="text-xs text-gray-500 mb-1"><i class="far fa-clock"></i> {{ $populer->published_at->format('d M Y') }}</div>
+                            <div class="text-xs text-gray-500 mb-1"><i class="far fa-clock"></i> {{ $populer->published_at ? $populer->published_at->format('d M Y') : $populer->created_at->format('d M Y') }}</div>
                             <h5 class="font-bold text-gray-800 text-sm leading-snug group-hover:text-green-600 transition line-clamp-2">
                                 <a href="{{ route('articles.show', $populer->slug) }}">{{ $populer->title }}</a>
                             </h5>
