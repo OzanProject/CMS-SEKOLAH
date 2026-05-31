@@ -152,9 +152,15 @@
             </div>
 
             <!-- Map -->
-            @if(isset($school_settings['google_maps_url']))
+            @if(isset($school_settings['google_maps_url']) && $school_settings['google_maps_url'])
             <div class="rounded-xl overflow-hidden shadow-lg h-60">
-                 <iframe src="{{ $school_settings['google_maps_url'] }}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                 @php
+                     $mapsUrl = $school_settings['google_maps_url'];
+                     if (!Str::startsWith($mapsUrl, ['http://', 'https://'])) {
+                         $mapsUrl = 'https://www.google.com/maps/' . ltrim($mapsUrl, '/');
+                     }
+                 @endphp
+                 <iframe src="{{ $mapsUrl }}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
             @endif
         </div>
