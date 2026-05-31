@@ -28,7 +28,7 @@
                     <tbody>
                         @forelse($links as $link)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $links->firstItem() + $loop->index }}</td>
                                 <td>{{ $link->title }}</td>
                                 <td><a href="{{ $link->url }}" target="_blank">{{ Str::limit($link->url, 50) }}</a></td>
                                 <td>
@@ -57,6 +57,11 @@
                     </tbody>
                 </table>
             </div>
+            @if($links->hasPages())
+            <div class="card-footer clearfix">
+                {{ $links->links('pagination::bootstrap-4') }}
+            </div>
+            @endif
         </div>
     </div>
 </div>

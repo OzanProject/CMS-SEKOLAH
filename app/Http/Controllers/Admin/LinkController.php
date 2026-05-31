@@ -10,7 +10,7 @@ class LinkController extends Controller
 {
     public function index()
     {
-        $links = Link::latest()->get();
+        $links = Link::latest()->paginate(10);
 
         return view('admin.links.index', compact('links'));
     }
@@ -22,17 +22,13 @@ class LinkController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'url' => 'required|starts_with:http://,https://,/',
             'target' => 'required|in:_blank,_self',
         ]);
 
-        Link::create([
-            'title' => $request->title,
-            'url' => $request->url,
-            'target' => $request->target,
-        ]);
+        Link::create($validated);
 
         return redirect()->route('admin.links.index')->with('success', 'Link berhasil ditambahkan');
     }
@@ -44,17 +40,13 @@ class LinkController extends Controller
 
     public function update(Request $request, Link $link)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'url' => 'required|starts_with:http://,https://,/', // Allow relative paths like /voting/login
             'target' => 'required|in:_blank,_self',
         ]);
 
-        $link->update([
-            'title' => $request->title,
-            'url' => $request->url,
-            'target' => $request->target,
-        ]);
+        $link->update($validated);
 
         return redirect()->route('admin.links.index')->with('success', 'Link berhasil diperbarui');
     }
