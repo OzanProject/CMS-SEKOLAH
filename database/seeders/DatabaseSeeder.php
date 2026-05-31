@@ -36,5 +36,14 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'user',
         ]);
+
+        // Memanggil seeder lainnya agar data dummy lengkap
+        $this->call([
+            SettingSeeder::class,
+            CategorySeeder::class,
+            ArticleSeeder::class,
+            TeacherSeeder::class,
+            CommitteeSeeder::class,
+        ]);
     }
 }
