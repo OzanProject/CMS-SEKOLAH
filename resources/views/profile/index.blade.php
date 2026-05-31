@@ -101,7 +101,7 @@
         <!-- Sidebar (Info Box) -->
         <div class="lg:col-span-4 space-y-8">
             <!-- Contact Info -->
-            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 sticky top-24">
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
                 <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
                     <i class="fas fa-address-card text-green-600 mr-2"></i> Kontak Kami
                 </h3>
