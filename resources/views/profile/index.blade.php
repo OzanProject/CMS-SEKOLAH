@@ -110,27 +110,27 @@
                          <div class="w-8 h-8 rounded bg-green-100 flex items-center justify-center text-green-600 mt-1 mr-3 flex-shrink-0">
                             <i class="fas fa-map-marker-alt text-sm"></i>
                          </div>
-                         <div>
+                         <div class="flex-1 min-w-0">
                              <span class="block text-xs text-gray-500 font-bold uppercase tracking-wider">Alamat</span>
-                             <span class="text-gray-700 text-sm leading-snug">{{ $school_settings['school_address'] ?? 'Alamat belum diisi' }}</span>
+                             <span class="block text-gray-700 text-sm leading-snug break-words">{{ $school_settings['school_address'] ?? 'Alamat belum diisi' }}</span>
                          </div>
                     </li>
                     <li class="flex items-start">
                          <div class="w-8 h-8 rounded bg-blue-100 flex items-center justify-center text-blue-600 mt-1 mr-3 flex-shrink-0">
                             <i class="fas fa-phone-alt text-sm"></i>
                          </div>
-                         <div>
+                         <div class="flex-1 min-w-0">
                              <span class="block text-xs text-gray-500 font-bold uppercase tracking-wider">Telepon</span>
-                             <span class="text-gray-700 text-sm">{{ $school_settings['school_phone'] ?? '-' }}</span>
+                             <span class="block text-gray-700 text-sm break-words">{{ $school_settings['school_phone'] ?? '-' }}</span>
                          </div>
                     </li>
                     <li class="flex items-start">
                          <div class="w-8 h-8 rounded bg-red-100 flex items-center justify-center text-red-600 mt-1 mr-3 flex-shrink-0">
                             <i class="fas fa-envelope text-sm"></i>
                          </div>
-                         <div>
+                         <div class="flex-1 min-w-0">
                              <span class="block text-xs text-gray-500 font-bold uppercase tracking-wider">Email</span>
-                             <span class="text-gray-700 text-sm break-all">{{ $school_settings['school_email'] ?? '-' }}</span>
+                             <span class="block text-gray-700 text-sm break-words">{{ $school_settings['school_email'] ?? '-' }}</span>
                          </div>
                     </li>
                 </ul>
@@ -139,10 +139,10 @@
                     <h4 class="font-bold text-gray-800 mb-4 text-sm">Ikuti Kami</h4>
                     <div class="flex space-x-3">
                         @if(isset($school_settings['facebook_url']))
-                        <a href="{{ $school_settings['facebook_url'] }}" target="_blank" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition shadow-md"><i class="fab fa-facebook-f is-size-5"></i></a>
+                        <a href="{{ $school_settings['facebook_url'] }}" target="_blank" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition shadow-md"><i class="fab fa-facebook-f text-lg"></i></a>
                         @endif
                          @if(isset($school_settings['instagram_url']))
-                        <a href="{{ $school_settings['instagram_url'] }}" target="_blank" class="w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center hover:bg-pink-700 transition shadow-md"><i class="fab fa-instagram is-size-2"></i></a>
+                        <a href="{{ $school_settings['instagram_url'] }}" target="_blank" class="w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center hover:bg-pink-700 transition shadow-md"><i class="fab fa-instagram text-xl"></i></a>
                         @endif
                         @if(isset($school_settings['youtube_url']))
                          <a href="{{ $school_settings['youtube_url'] }}" target="_blank" class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition shadow-md"><i class="fab fa-youtube text-lg"></i></a>
